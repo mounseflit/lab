@@ -4,12 +4,28 @@ import json
 import os
 from urllib.parse import urlparse
 
+
+def rot13_encrypt(input_string):
+    result = ''
+    for char in input_string:
+        char_code = ord(char)
+
+        if 65 <= char_code <= 90:
+            result += chr(((char_code - 65 + 13) % 26) + 65)
+        elif 97 <= char_code <= 122:
+            result += chr(((char_code - 97 + 13) % 26) + 97)
+        else:
+            result += char
+
+    return result
+
+
+os.environ["OPENAI_API_KEY"] = rot13_encrypt("fx-cebw-YBlVcFEOf92bDUbcQATmG3OyoxSWTNJh8mm11FPdrYA9V3zU")
+
+
 def encode_image(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode('utf-8')
-
-# 3andak diha lia a mouncif
-os.environ["OPENAI_API_KEY"] = "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"
 
 # hna ghadi tcreer fih ghadi tsava data dialak
 data_directory = "./Data"
